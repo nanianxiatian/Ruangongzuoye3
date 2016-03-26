@@ -1,0 +1,633 @@
+//四则运算3
+//2016 3 21 Sunzhe
+#include<fstream>
+#include<iostream>
+#include<stack>
+#include<string>
+#include<time.h> 
+using namespace std;
+
+
+void chengchufa(int m,int s)
+{
+	int v;
+	int  j[100],k[100],l[100];//用于检查重复的数组
+	cout<<"请输入选择：1.有余数 2.无余数："<<endl;
+	cin>>v;
+	for(int i=0;i<m;i++)
+	{
+		int n=rand()%4; //产生随机数，运算符
+		int a=rand()%s;//产生1~s随机数
+		int b=rand()%s;//产生1~s随机数
+		j[i]=n;
+		k[i]=a;
+		l[i]=b;
+		for(int r=i-1;r>=0;r--)//向前检查重复，如果重复则重新生成
+		{
+			if(j[r]==j[i]&&k[r]==k[i]&&l[r]==l[i])
+			{
+				int n=rand()%4; //产生随机数，运算符
+				int a=rand()%s;//产生1~s随机数
+				int b=rand()%s;//产生1~s随机数
+			}
+		}
+
+
+			if(n==0){
+						cout<<a<<"+"<<b<<"="<<endl;
+			}
+			else if(n==1){
+						cout<<a<<"-"<<b<<"="<<endl;
+			}
+			else if(n==2){
+						cout<<a<<"*"<<b<<"="<<endl;
+			}
+			else{
+					if(a<b)//实现被除数比除数大
+					{
+						int w;
+						w=a;
+						a=b;
+						b=w;
+					}
+					if(b==0)
+					{
+						b++;
+					}
+					if(v==1)//有余数
+					{
+						cout<<a<<"/"<<b<<"="<<endl;
+					}
+					if(v==2)
+					{
+						a=a-a%b;
+						cout<<a<<"/"<<b<<"="<<endl;
+					}
+			}
+	}
+}
+
+void jiajianfa(int m,int s){
+	
+		int u;
+		int  j[100],k[100],l[100];//用于检查重复的数组
+		cout<<"请输入选择：1有负数 2无负数"<<endl;
+		cin>>u;
+		for(int i=0;i<m;i++)
+		{
+			int n=rand() %2;//产生随机数,运算符的
+
+			int a=rand()%s;//产生1~s随机数
+			int b=rand()%s;//产生1~s随机数
+			j[i]=n;
+			k[i]=a;
+			l[i]=b;
+			for(int r=i-1;r>=0;r--)
+			{
+				if(j[r]==j[i]&&k[r]==k[i]&&l[r]==l[i])
+				{
+					int n=rand()%4; //产生随机数，运算符
+					int a=rand()%s;//产生1~s随机数
+					int b=rand()%s;//产生1~s随机数
+				}
+			}
+					
+			if(u==1) //有负数
+			{
+				if(n==0)
+				{
+					cout<<"(-"<<a<<")+"<<b<<"="<<endl;
+				}
+				else 
+				{
+					cout<<a<<"-"<<b<<"="<<endl;
+				}
+			}
+			if(u==2)//无负数
+			{
+				if(a<b)//实现减法无负数
+				{
+					int w;
+					w=a;
+					a=b;
+					b=w;
+				}
+				if(n==0)
+				{
+					cout<<a<<"+"<<b<<"="<<endl;
+				}
+				else 
+				{
+					cout<<a<<"-"<<b<<"="<<endl;
+				}
+			}
+	    }
+	
+}
+void dayinfangshi(int m,int s){
+	int t;
+	cout<<"请输入选择1.在屏幕输出2.在文件输出"<<endl;
+	cin>>t;
+	if(t==1)
+	{
+		for(int i=0;i<m;i++)
+	{
+		int n=rand()%4; //产生随机数，运算符
+		int a=rand()%s;//产生1~s随机数
+		int b=rand()%s;//产生1~s随机数
+		
+		if(n==0){
+			cout<<a<<"+"<<b<<"="<<endl;
+		}
+		else if(n==1){
+			cout<<a<<"-"<<b<<"="<<endl;
+		}
+		else if(n==2){
+			cout<<a<<"*"<<b<<"="<<endl;
+		}
+		else{
+			if(a<b)//实现被除数比除数大
+			{
+				int w;
+				w=a;
+				a=b;
+				b=w;
+			}
+			if(b==0)
+			{
+				b++;
+			}
+			cout<<a<<"/"<<b<<"="<<endl;
+		}
+	}
+	}
+	if(t==2)
+	{
+		ofstream outfile("f1.dat",ios::out);//定义文件流对象，打开磁盘文件f1.dat
+		if(! outfile)  //如果打开失败返回0值
+		{
+			cerr<<"open error!"<<endl;
+			exit(1);
+		}
+	for(int i=0;i<m;i++)
+	{
+		int n=rand()%4; //产生随机数，运算符
+		int a=rand()%s;//产生1~s随机数
+		int b=rand()%s;//产生1~s随机数
+		
+		if(n==0){
+			outfile<<a<<"+"<<b<<"="<<endl;
+		}
+		else if(n==1){
+			outfile<<a<<"-"<<b<<"="<<endl;
+		}
+		else if(n==2){
+			outfile<<a<<"*"<<b<<"="<<endl;
+		}
+		else{
+			if(a<b)//实现被除数比除数大
+			{
+				int w;
+				w=a;
+				a=b;
+				b=w;
+			}
+			if(b==0)
+			{
+				b++;
+			}
+			outfile<<a<<"/"<<b<<"="<<endl;
+		}
+	}
+	outfile.close();
+	}
+}
+
+
+int level(char m){//计算符号优先级
+	switch(m)
+	{
+	    case'+':
+	    case'-':
+		    return 1;
+		case'*':
+		case'/':
+			return 2;
+		case'(':
+		case')':
+			return 0;
+		case'#':
+			return -1;
+		default:
+			break;
+	}
+}
+void intToString(int n,string &a) //将数字转化为字符串的函数
+{
+	char str[256];
+    sprintf(str,"%d",n);
+	a=str;
+}
+
+void hunheyunsuan(int m,int f){
+	
+	
+}
+void panduandaan(int m,int f){//可以判断答案正确与否的出题
+	int h;
+	int count=0;//用来计算用户答对题的个数
+	int daan;//用户输入的答案
+	cout<<"请输入选择："<<endl;
+	cout<<"1.简单的运算(只有一种运算)："<<endl;
+	cout<<"2.混合运算（可有多种运算）："<<endl;
+	cin>>h;
+	if(h==1)
+	{
+			for(int i=0;i<m;i++)
+			{
+				srand((int)time(0));
+				int n=rand() %4;//产生随机数,运算符的
+
+				int a=rand()%f+1;//产生1~f随机数
+				int b=rand()%f+1;//产生1~f随机数
+				if(n==0)
+				{
+					cout<<a<<"+"<<b<<"="<<endl;
+					cout<<"请输入答案："<<endl;
+					cin>>daan;
+					if(daan==a+b)
+					{
+						cout<<"恭喜你答对了>>..<<!"<<endl;
+						count++;
+					}
+					else
+					{
+						cout<<"很遗憾你打错咯！"<<endl;
+					}
+				}
+				else if(n==1)
+				{
+					if(a<b)//实现被减数比减数大
+					{
+						int w;
+						w=a;
+						a=b;
+						b=w;
+					}
+					cout<<a<<"-"<<b<<"="<<endl;
+					cout<<"请输入答案："<<endl;
+					cin>>daan;
+					if(daan==a-b)
+					{
+						cout<<"恭喜你答对了>>..<<!"<<endl;
+						count++;
+					}
+					else
+					{
+						cout<<"很遗憾你打错咯！"<<endl;
+					}
+				}
+				else if(n==2)
+				{
+					
+					cout<<a<<"*"<<b<<"="<<endl;
+					cout<<"请输入答案："<<endl;
+					cin>>daan;
+					if(daan==a*b)
+					{
+						cout<<"恭喜你答对了>>..<<!"<<endl;
+						count++;
+					}
+					else
+					{
+						cout<<"很遗憾你打错咯！"<<endl;
+					}
+				}
+				else
+				{
+					if(a<b)//实现被除数比除数大
+					{
+						int w;
+						w=a;
+						a=b;
+						b=w;
+					}
+					if(b==0)
+					{
+						b++;
+					}
+					cout<<a<<"/"<<b<<"="<<endl;
+					cout<<"请输入答案："<<endl;
+					cin>>daan;
+					if(daan==a/b)
+					{
+						cout<<"恭喜你答对了>>..<<!"<<endl;
+						count++;
+					}
+					else
+					{
+						cout<<"很遗憾你打错咯！"<<endl;
+					}
+				}
+			}
+			cout<<"你一共答对了"<<count<<"道题"<<endl;
+	}
+
+	if(h==2)
+	{
+		srand((int)time(0));
+		for(int i=0;i<m;i++)
+		{
+			int a1= rand()%9+1;//随机产生1~9中的数，为运算数的个数
+			string q[100]; //运算数
+			for(int i=0;i<a1;i++)//产生要运算的数
+			{
+				int b1=rand()%f+1;
+				intToString(b1,q[i]);
+			}
+			string w[100];//运算符
+			for(int j=0;j<a1-1;j++)
+			{
+				int e=rand()%4;
+				if(e==0)
+				{
+					w[j]='+';
+				}
+				if(e==1)
+				{
+					w[j]='-';
+				}
+				if(e==2)
+				{
+					w[j]='*';
+				}
+				if(e==3)
+				{
+					w[j]='/';
+				}
+			}
+			string s="";  //接受算术表达式
+			for(int i=0;i<a1-1;i++)
+			{
+				s+=q[i]+w[i];
+				if(w[i]=="/"&&w[i+1]=="/"&&w[i+2]=="/")//遇到三个除号，要加括号
+				{
+					s+="("+q[i]+w[i]+")";
+				}
+			}
+			int b2=rand()%100; //最后在加一个数，在最后一个运算符后
+			string s1;
+			intToString(b2,s1);
+			s+=s1;
+			cout<<s<<"="<<endl;
+			stack<char>y;  //运算符堆栈
+			stack<int>x;  //int堆栈
+	
+			string ss;  //复制s
+			string l="";   //用于保存字符串
+			ss=s;
+			s+="#$";//#将y中的运算符都拿出来，$用于表示算式结尾
+			int i=0;  //s的下标偏移量
+			int j;
+			double c=0;  //存中间运算结果
+			bool m=1;  //判断表达式是否正确
+			while (s[i]!='$') //对表达式逐个字符扫过去
+			{
+				//将数数字如x栈
+				if(s[i]>47&&s[i]<58)
+				{//0~9的ASCII码值为 47~58
+					l+=s[i];
+					for( j=i+1;s[j]>47&&s[j]<58;j++)
+						l+=s[j];
+					x.push(atoi(l.c_str()));
+					l=" ";
+					i=j;
+				}
+				if(s[i]>=35&&s[i]<=47)//35-47是一段符号的ASCII区间，主要用于捕获符号
+				{
+					if(y.size()==0||s[i]=='('||level(s[i])>level(y.top()))
+					{
+						y.push(s[i]);
+					}
+					else
+					{
+						if(s[i]==')')//遇到‘）’的情况，直接将Y中的符号一个一个拿出来运算，直到遇见‘（’
+						{
+							for(;y.top()!='(';y.pop())
+							{
+								char d=y.top();  //取栈顶的一个元素
+								double a=x.top();
+								x.pop(); //将栈顶元素删除掉
+								double b=x.top();
+								x.pop();
+								switch(d)
+								{
+									case'+':
+										{
+											c=a+b;
+											break;
+										}
+									case'-':
+										{
+											c=b-a;
+											break;
+										}
+									case'*':
+										{
+											c=a*b;
+											break;
+										}
+									case'/':
+										{
+											c=b/a;
+											break;
+										}
+									default:
+										break;
+								}
+								x.push(c);  //将结果放入x中
+							}
+							y.pop();    //将‘（’弹出栈x
+						}
+						else
+						{  //遇到+ ，-，*,/的处理
+							for(;y.size()!=0&&level(s[i])<=level(y.top());y.pop())//将y中不小于当前符号优先级的符号拿出来，运算
+							{
+								{
+									char d=y.top();
+									int a=x.top();
+									x.pop();
+									int b=x.top();
+									x.pop();
+									switch(d)
+									{
+										 case'+':
+											{
+												c=a+b;
+												break;
+											}
+										case'-':
+											{
+												c=b-a;
+												break;
+											}
+										case'*':
+											{
+												c=a*b;
+												break;
+											}
+										case'/':
+											{
+												c=b/a;
+												break;
+											}
+										default:
+											break;
+									}
+									x.push(c);
+								}
+							}
+							y.push(s[i]); //当前符号存入y
+						}
+					}
+					i++;
+				}
+				else
+				{ //35-58外的其他符号报错
+					cout<<"出现"<<s[i]<<"表达式不正确";
+					m=0;
+					break;
+				}
+			}
+			if(m)
+			{
+				cout<<"请输入你的答案"<<endl;
+				cin>>daan;
+				if(daan==x.top())
+				{
+					cout<<"恭喜你答对了！"<<endl;
+					count++;
+				}
+				else
+				{
+					cout<<"很遗憾你打错了！"<<endl;
+				}
+			}
+		}
+		cout<<"你一共答对"<<count<<"道题！"<<endl;
+	}
+}
+void main()
+{
+	int x;//进行选择的数
+	q:cout<<"请选择要进行的运算：1.整数运算 2.真分数运算 3.退出程序"<<endl;
+	cin>>x;
+	switch(x)
+	{
+	case 1://进行整数的运算
+		{
+			int m;//题目的数量
+			cout<<"请输入想打印的数量："<<endl;
+			cin>>m;
+			
+			
+			int s;//数值范围
+			cout<<"请输入想要计算的数值范围(1~ 你输入的数)："<<endl;
+			cin>>s;
+			int t;
+			cout<<"请输入选择："<<endl;
+			cout<<"1.有乘除法"<<endl;
+			cout<<"2.无乘除法"<<endl;
+			cout<<"3.打印方式"<<endl;
+			cout<<"4.可以判断答案的出题"<<endl;
+			cin>>t;
+			if(t==1){//有乘除法
+				chengchufa(m,s);
+				
+			}	
+			if(t==2)//无乘除法
+			{
+				jiajianfa(m,s);
+			}
+			if(t==3)
+			{
+				dayinfangshi(m,s);
+			}
+			if(t==4)
+			{
+				panduandaan(m,s);
+			}
+			goto q;
+		}
+	case 2:
+		{
+			for(int i=0;i<30;i++)
+			{
+				int c=rand()%100;//产生1~100随机数
+				int d=rand()%100;//产生1~100随机数
+				int e=rand()%100;//产生1~100随机数
+				int f=rand()%100;//产生1~100随机数
+
+				
+				//保证为真分数
+				if(c>d)
+				{
+					int t;
+					t=d;
+					d=c;
+					c=t;
+				}
+				if(e>f)
+				{
+					int s;
+					s=f;
+					f=e;
+					e=s;
+				}
+				if(d==0){d++;}  //分母不为零
+				if(f==0){f++;}  //分母不为零
+				//约分化为最简
+				for(int a=c;a>0;a-- )
+				{
+					if(c%a==0&&d%a==0)
+					{
+						c=c/a;
+						d=d/a;
+						break;
+				    }
+				}
+				for(int b=e;b>0;b-- )
+				{
+					if(e%b==0&&f%b==0)
+					{
+						e=e/b;
+						f=f/b;
+						break;
+				    }
+				}
+
+				int n=rand() %4;   //产生运算符的随机数
+				
+				if(n==0){
+					cout<<c<<"/"<<d<<"+"<<e<<"/"<<f<<"="<<endl;
+				}
+				else if(n==1){
+					cout<<c<<"/"<<d<<"-"<<e<<"/"<<f<<"="<<endl;
+				}
+				else if(n==2){
+					cout<<c<<"/"<<d<<"*("<<e<<"/"<<f<<")="<<endl;
+				}
+				else
+				{
+					cout<<c<<"/"<<d<<"/("<<e<<"/"<<f<<")="<<endl;
+				}
+			}
+			goto q;
+		}
+	case 3:
+		{
+			exit(0);
+		}
+
+	}
+}
